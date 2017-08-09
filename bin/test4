@@ -1,0 +1,13 @@
+import os
+from docopt import docopt
+"""Usage:
+  test4 (--fresh | --stale) <reqfile1> <reqfile2> [--exclude <package>...]
+  test4 (-h | --help)
+
+Options:
+  -h --help     Show this screen.
+  --fresh       List newly added packages.
+  --stale       List removed packages.
+"""
+args = docopt(__doc__)
+print(args)

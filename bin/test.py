@@ -1,15 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-"""Usage:
-  pip-diff (--fresh | --stale) <reqfile1> <reqfile2> [--exclude <package>...]
-  pip-diff (-h | --help)
-
-Options:
-  -h --help     Show this screen.
-  --fresh       List newly added packages.
-  --stale       List removed packages.
-"""
 import os
 from docopt import docopt
 from pip.req import parse_requirements
@@ -31,15 +19,14 @@ class Requirements(object):                     #Requitement(r1)
     def __repr__(self):
         return '<Requirements \'{}\'>'.format(self.path)
 
-    def load(self, reqfile): #testload.py
+    def load(self, reqfile):
         if not os.path.exists(reqfile):                                         #pass
             raise ValueError('The given requirements file does not exist.')
 
         finder = PackageFinder([], [], session=requests)                        #object finder= new Class PackageFinder
         for requirement in parse_requirements(reqfile, finder=finder, session=requests): #guess : yield lines
-            if requirement.req:                                                           #requirement.req.name=abc
-                if not getattr(requirement.req, 'name', None):          #type(self.requirements) is list requirement is an object
-                                                                           #the elements in self.requirements is object
+            if requirement.req:
+                if not getattr(requirement.req, 'name', None):
                     # Prior to pip 8.1.2 the attribute `name` did not exist.
                     requirement.req.name = requirement.req.project_name
                 self.requirements.append(requirement.req)                       #self.requirements=[] + 'requirement.req'
@@ -101,22 +88,18 @@ def diff(r1, r2, include_fresh=False, include_stale=False, excludes=None):
 
 def main():
     #args = docopt(__doc__, version='pip-diff')
-    #print(args)
-    kwargs = {
-            #'r1': args['<reqfile1>'],
-            #'r2': args['<reqfile2>'],
 
-            #'include_fresh': args['--fresh'],
-            #'include_stale': args['--stale'],
-            #'excludes': args['<package>']
-            'r1': 'a.txt',
-            'r2': 'b.txt',
-             'include_fresh': True,
-            'include_stale': False,
-            'excludes':  '[]',
-        }
-    #print(kwargs)
-    diff(**kwargs)
+    # kwargs = {
+    #         'r1': args['<reqfile1>'],
+    #         'r2': args['<reqfile2>'],
+    #         #'r1': args['a.txt'],
+    #         #'r1': args['b.txt'],
+    #         'include_fresh': args['--fresh'],
+    #         'include_stale': args['--stale'],
+    #         'excludes': args['<package>']
+    #     }
+
+    diff('a.txt','b,txt',True,)
 
 if __name__ == '__main__':
     main()
